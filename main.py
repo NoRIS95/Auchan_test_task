@@ -1,4 +1,5 @@
 import os
+import logging
 
 dirs = ['TEST_Folder_1', 'TEST_Folder_2']
 REC_DIR = 'Result'
@@ -27,7 +28,12 @@ def rec_file(dir, text_file):
 
 
 for dir in dirs:
-    file_for_dir = os.listdir(dir)
-    for text_file in file_for_dir:
+    if not os.path.exists(dir):
+        logging.error(f"Directory {dir} is not found")
+        continue
+    files_for_dir = os.listdir(dir)
+    if len(files_for_dir) == 0:
+        logging.warning(f"Directory {dir} is empty")
+    for text_file in files_for_dir:
         rec_file(dir, text_file)
 
