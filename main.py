@@ -1,7 +1,10 @@
 import os
 import logging
 
-dirs = ['TEST_Folder_1', 'TEST_Folder_2']
+dirs = os.listdir()
+dirs.remove('main.py')
+dirs.remove('README.md')
+dirs.remove('.git')
 REC_DIR = 'Result'
 
 
@@ -27,13 +30,15 @@ def rec_file(dir, text_file):
     return
 
 
-for dir in dirs:
-    if not os.path.exists(dir):
-        logging.error(f"Directory {dir} is not found")
-        continue
-    files_for_dir = os.listdir(dir)
-    if len(files_for_dir) == 0:
-        logging.warning(f"Directory {dir} is empty")
-    for text_file in files_for_dir:
-        rec_file(dir, text_file)
+if __name__ == '__main__':
+    for dir in dirs:
+        if dir is not REC_DIR:
+            if not os.path.exists(dir):
+                logging.error(f"Directory {dir} is not found")
+                continue
+            files_for_dir = os.listdir(dir)
+            if len(files_for_dir) == 0:
+                logging.warning(f"Directory {dir} is empty")
+            for text_file in files_for_dir:
+                rec_file(dir, text_file)
 
