@@ -10,6 +10,7 @@ REC_DIR = 'Result'
 
 def rec_file(dir, text_file):
     num_file = (text_file[text_file.find("N_") + 1 : text_file.find(".txt")])
+    num_file = num_file.replace('_', '')
     f = open(f'{dir}/{text_file}', 'r')
     nums = []
     for string in f:
