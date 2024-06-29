@@ -8,15 +8,19 @@ FIRST_PART_NEW_NAME = 'TEST_AUCHAN_success'
 
 
 def read_file(file_path, dir_path):
-    file_info = {}
     with open(file_path, 'r') as f:
-        file_name = file_path.replace(f'{dir_path}/', '')
         for line in f:
             string = line.replace('"', '')
-        file_info['File_name'] = file_name
-        file_info['String'] = string
-    return file_info
-
+    nums = []
+    for sym in string.split(','):
+        if '-' not in sym:
+            num = int(sym)
+            nums.append(num)
+        else:
+            start_finish_nums = sym.split('-')
+            for num in range(int(start_finish_nums[0]), int(start_finish_nums[1]) + 1):
+                nums.append(num)
+    return nums
 
 
 def write_file(dir, file_name, nums):
@@ -26,20 +30,12 @@ def write_file(dir, file_name, nums):
 
 
 def process_file(dir, dir_path, file_path):
-    file_info = read_file(file_path, dir_path)
-    nums = []
-    for sym in file_info['String'].split(','):
-        if '-' not in sym:
-            num = int(sym)
-            nums.append(num)
-        else:
-            start_finish_nums = sym.split('-')
-            for num in range(int(start_finish_nums[0]), int(start_finish_nums[1]) + 1):
-                nums.append(num)
+    file_name = file_path.replace(f'{dir_path}/', '')
+    nums = read_file(file_path, dir_path)
     if not os.path.exists(RESULTS_DIR):
         os.mkdir(RESULTS_DIR)
     sorted_nums = sorted(set(nums))
-    write_file(dir, file_info['File_name'], sorted_nums)
+    write_file(dir, file_name, sorted_nums)
 
 
 if __name__ == '__main__':
