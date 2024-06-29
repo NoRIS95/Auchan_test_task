@@ -7,7 +7,7 @@ RESULTS_DIR = 'Result'
 FIRST_PART_NEW_NAME = 'TEST_AUCHAN_success'
 
 
-def read_file(file_path, dir_path):
+def read_file(file_path):
     with open(file_path, 'r') as f:
         for line in f:
             string = line.replace('"', '')
@@ -31,7 +31,7 @@ def write_file(dir, file_name, nums):
 
 def process_file(dir, dir_path, file_path):
     file_name = file_path.replace(f'{dir_path}/', '')
-    nums = read_file(file_path, dir_path)
+    nums = read_file(file_path)
     if not os.path.exists(RESULTS_DIR):
         os.mkdir(RESULTS_DIR)
     sorted_nums = sorted(set(nums))
